@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistencia - Versión Inicial</title>
+    <style>
+        /* === Estilos Generales y Tema Oscuro === */
+        :root {
+            --bg-color: #0f172a; /* Fondo principal un poco más oscuro */
+            --sidebar-bg: #111827;
+            --card-bg: #1e293b; /* Fondo de tarjetas */
+            --card-border: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-orange: #f97316;
+            --badge-red-bg: rgba(239, 68, 68, 0.2);
+            --badge-red-text: #ef4444;
+            --badge-green-bg: rgba(34, 197, 94, 0.2);
+            --badge-green-text: #22c55e;
+            --badge-gray-bg: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+        }
+
+        /* === Barra Lateral === */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--card-border);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .menu-items {
+            flex-grow: 1;
+            padding: 20px 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item.active {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+
+        .bottom-menu {
+            padding: 20px 10px;
+        }
+        
+        .text-danger { color: #ef4444; }
+
+        /* === Contenido Principal === */
+        .main-content {
+            flex: 1;
+            padding: 30px 40px;
+            overflow-y: auto;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* === Selector de Evento === */
+        .event-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .event-section label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .event-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .event-select {
+            flex: 1;
+            background-color: var(--bg-color);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .btn-add-event {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            align-items: center;
+        }
+
+        .delete-event-icon {
+            color: var(--badge-red-text);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1rem;
+        }
+
+        /* === Tarjetas de Estadísticas === */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-card.active-stat { border-color: var(--accent-blue); }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--accent-blue);
+        }
+
+        .stat-icon.orange { color: #f59e0b; }
+        .stat-icon.green { color: #10b981; }
+
+        .stat-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2px;
+        }
+
+        .stat-info p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* === Controles de Tabla (Filtros y Exportar) === */
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            background-color: var(--bg-color);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-export {
+            background-color: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* === Tabla === */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            padding: 15px 20px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--card-border);
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+
+        /* Badges */
+        .badge-hijo {
+            background-color: var(--badge-gray-bg);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .badge-estado {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            min-width: 70px;
+        }
+
+        .badge-falta {
+            background-color: var(--badge-red-bg);
+            color: var(--badge-red-text);
+        }
+
+        .badge-asistio {
+            background-color: var(--badge-green-bg);
+            color: var(--badge-green-text);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout">
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo">🛡️ APAFA Control</span>
+            </div>
+            
+            <nav class="menu-items">
+                <div class="menu-item">▢ Inicio</div>
+                <div class="menu-item">👥 Datos de Padres</div>
+                <div class="menu-item active">📋 Asistencia</div>
+                <div class="menu-item">QR QRs Generados</div>
+                <div class="menu-item">⚙️ Configuración</div>
+            </nav>
+
+            <div class="bottom-menu">
+                <div class="menu-item">[ ] Escáner QR</div>
+                <div class="menu-item text-danger">🚪 Cerrar Sesión</div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Asistencia</h1>
+                <p>Registro de asistencia y control de inasistentes</p>
+            </div>
+
+            <!-- Selector de Evento -->
+            <div class="event-section">
+                <label>Evento / Reunión</label>
+                <div class="event-controls">
+                    <select class="event-select">
+                        <option>2026-07-20 - asdasd</option>
+                        <option>2026-06-15 - Asamblea General</option>
+                    </select>
+                    <button class="btn-add-event">+</button>
+                </div>
+                <div class="event-footer">
+                    <span>📅 2026-07-20 - asdasd</span>
+                    <button class="delete-event-icon">🗑️</button>
+                </div>
+            </div>
+
+            <!-- Tarjetas de Estadísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-info">
+                        <h2 id="stat-asistieron">1</h2>
+                        <p>Asistieron</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">👥</div>
+                    <div class="stat-info">
+                        <h2 id="stat-faltaron">1296</h2>
+                        <p>No Asistieron</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">👥</div>
+                    <div class="stat-info">
+                        <h2 id="stat-total">1297</h2>
+                        <p>Total Padres</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles de Tabla -->
+            <div class="table-toolbar">
+                <div class="filter-group">
+                    <span class="filter-label">Filtrar:</span>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="todos">TODOS</button>
+                        <button class="filter-btn" data-filter="asistieron">ASISTIERON</button>
+                        <button class="filter-btn" data-filter="falta">FALTA</button>
+                    </div>
+                </div>
+                <button class="btn-export">📥 Exportar Excel</button>
+            </div>
+
+            <!-- Tabla de Asistencia -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Apoderado</th>
+                        <th>DNI</th>
+                        <th>Hijos</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="asistenciaTableBody">
+                    <!-- Filas generadas por JS -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        // === DATOS DE PRUEBA SIMULADOS (V1) ===
+        const datosAsistencia = [
+            { apoderado: "HUANUCO VALDVIA GIOVANNA LUCY", dni: "40844724", hijos: ["QUINTO 'C'"], hora: "-", estado: "Falta" },
+            { apoderado: "LEYVA PEREZ VICTOR MESIAS", dni: "42371519", hijos: ["QUINTO 'H'", "PRIMERO 'B'"], hora: "-", estado: "Falta" },
+            { apoderado: "TORRES RAMIREZ DEISY LIBERTAD", dni: "42115174", hijos: ["PRIMERO 'G'", "CUARTO 'F'"], hora: "-", estado: "Falta" },
+            { apoderado: "ABENDAÑO CÓRDOVA ENELIDA", dni: "00000000", hijos: ["SEXTO 'E'"], hora: "-", estado: "Falta" },
+            { apoderado: "EJEMPLO PADRE QUE ASISTIÓ", dni: "76543210", hijos: ["SEGUNDO 'A'"], hora: "08:15 AM", estado: "Asistió" }, // Añadido uno que asistió para probar filtros
+            { apoderado: "ACHA CASTILLO HOJAIRA SHARON", dni: "45894912", hijos: ["PRIMERO 'F'"], hora: "-", estado: "Falta" },
+            { apoderado: "ACHING VALLES JANETH SHIRLEY", dni: "41723585", hijos: ["SEXTO 'A'", "CUARTO 'G'"], hora: "-", estado: "Falta" }
+        ];
+
+        const tbody = document.getElementById('asistenciaTableBody');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // Función para renderizar la tabla
+        function renderTable(filtro = "todos") {
+            tbody.innerHTML = '';
+            
+            let asistieronCount = 0;
+            let faltaCount = 0;
+
+            datosAsistencia.forEach(registro => {
+                // Conteo para estadísticas (siempre cuenta todos los datos reales)
+                if (registro.estado === "Asistió") asistieronCount++;
+                if (registro.estado === "Falta") faltaCount++;
+
+                // Lógica del Filtro
+                if (filtro === "asistieron" && registro.estado !== "Asistió") return;
+                if (filtro === "falta" && registro.estado !== "Falta") return;
+
+                // Crear badges de hijos
+                let hijosHtml = registro.hijos.map(h => `<span class="badge-hijo">${h}</span>`).join('');
+                
+                // Crear badge de estado
+                let estadoClase = registro.estado === "Falta" ? "badge-falta" : "badge-asistio";
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: bold;">${registro.apoderado}</td>
+                    <td>${registro.dni || ''}</td>
+                    <td>${hijosHtml}</td>
+                    <td>${registro.hora}</td>
+                    <td><span class="badge-estado ${estadoClase}">${registro.estado}</span></td>
+                    <td></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Actualizar Tarjetas de Estadísticas (Simulando los 1297 totales de tu imagen + los de prueba)
+            // Nota: En la vida real esto se calcula del total de la BD, aquí lo forzamos un poco para que se parezca a tu imagen.
+            document.getElementById('stat-asistieron').innerText = asistieronCount;
+            document.getElementById('stat-faltaron').innerText = (1296 - 1) + faltaCount; // Ajuste mock
+            document.getElementById('stat-total').innerText = 1297; 
+        }
+
+        // Eventos para los botones de filtro
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Quitar clase active de todos
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Poner clase active al clickeado
+                e.target.classList.add('active');
+                
+                // Ejecutar filtro
+                const filtro = e.target.getAttribute('data-filter');
+                renderTable(filtro);
+            });
+        });
+
+        // Render inicial
+        renderTable();
+    </script>
+</body>
+</html>
