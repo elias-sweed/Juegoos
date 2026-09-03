@@ -3,698 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Desafío Matemático! - Igualdades y Ecuaciones</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <title>Cuestionario de Matemáticas</title>
     <style>
-        :root {
-            --primary-color: #6C5CE7;
-            --secondary-color: #00CEC9;
-            --accent-color: #FDCB6E;
-            --danger-color: #FF7675;
-            --success-color: #00B894;
-            --bg-color: #F8EFBA;
-            --card-bg: #FFFFFF;
-            --text-color: #2D3436;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Quicksand', sans-serif;
-            user-select: none;
-        }
-
         body {
-            background-color: var(--bg-color);
-            background-image: radial-gradient(#6C5CE7 0.75px, transparent 0.75px), radial-gradient(#00CEC9 0.75px, #F8EFBA 0.75px);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
         }
-
-        .game-container {
-            width: 100%;
-            max-width: 850px;
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 12px 0 #D6A2E8, 0 20px 25px rgba(0,0,0,0.15);
-            border: 4px solid var(--primary-color);
-            overflow: hidden;
-            position: relative;
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 20px;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        /* Screens */
-        .screen {
-            display: none;
-            padding: 30px 25px;
+        h1 {
             text-align: center;
+            color: #333;
         }
-
-        .screen.active {
-            display: block;
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #fafafa;
         }
-
-        /* Cover Screen */
-        .cover-title {
-            font-family: 'Fredoka One', cursive;
-            font-size: 2.8rem;
-            color: var(--primary-color);
-            text-shadow: 3px 3px 0px var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .cover-subtitle {
-            font-size: 1.2rem;
-            color: #636E72;
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-
-        .badge-level {
-            display: inline-block;
-            padding: 6px 16px;
-            background: var(--accent-color);
-            border-radius: 20px;
-            font-weight: bold;
-            color: var(--text-color);
-            margin-bottom: 20px;
-            box-shadow: 0 4px 0 #E1B12C;
-        }
-
-        .btn {
-            font-family: 'Fredoka One', cursive;
-            font-size: 1.3rem;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-            text-decoration: none;
-            display: inline-block;
-            margin: 8px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 6px 0 #4B3F82;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 0 #4B3F82;
-        }
-
-        .btn-primary:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #4B3F82;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-            box-shadow: 0 6px 0 #009793;
-        }
-
-        /* HUD Header */
-        .hud {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #F1F2F6;
-            padding: 12px 20px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            border: 2px solid #DFE4EA;
-        }
-
-        .hud-item {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--text-color);
-        }
-
-        .hud-value {
-            color: var(--primary-color);
-            font-family: 'Fredoka One', cursive;
-            font-size: 1.3rem;
-        }
-
-        /* Progress Bar */
-        .progress-bar-container {
-            width: 100%;
-            height: 14px;
-            background-color: #DFE4EA;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background-color: var(--secondary-color);
-            transition: width 0.3s ease;
-        }
-
-        /* Question Box */
         .question-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-color);
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .question-box {
-            background: #F8F9FA;
-            border: 3px dashed var(--primary-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            font-size: 1.6rem;
             font-weight: bold;
-            color: var(--primary-color);
+            margin-bottom: 10px;
+            color: #2c3e50;
         }
-
-        /* Input Types */
-        /* Multiple Choice */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+        .options-list {
+            list-style: none;
+            padding: 0;
         }
-
-        .option-btn {
-            background: #FFFFFF;
-            border: 3px solid #DFE4EA;
-            border-radius: 16px;
-            padding: 15px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-color);
+        .options-list li {
+            margin-bottom: 8px;
+        }
+        label {
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 0 #DFE4EA;
         }
-
-        .option-btn:hover {
-            border-color: var(--primary-color);
-            background-color: #F4F0FF;
-            transform: translateY(-2px);
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #27ae60;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
         }
-
-        /* Text Input */
-        .text-input-container {
-            margin-bottom: 20px;
+        button:hover {
+            background-color: #219150;
         }
-
-        .math-input {
-            width: 150px;
-            font-size: 1.8rem;
+        #result {
+            margin-top: 20px;
+            padding: 15px;
             text-align: center;
-            padding: 10px;
-            border: 3px solid var(--primary-color);
-            border-radius: 12px;
-            outline: none;
-            font-family: 'Fredoka One', cursive;
-            color: var(--primary-color);
-        }
-
-        /* Drag and Drop */
-        .drag-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .drag-item {
-            padding: 12px 24px;
-            background: var(--accent-color);
-            border-radius: 12px;
-            font-size: 1.3rem;
+            font-size: 18px;
             font-weight: bold;
-            color: var(--text-color);
-            cursor: grab;
-            box-shadow: 0 4px 0 #E1B12C;
-            touch-action: none;
+            border-radius: 6px;
+            display: none;
         }
-
-        .drop-zone {
-            min-width: 140px;
-            min-height: 60px;
-            border: 3px dashed var(--secondary-color);
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #E0F8F7;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #009793;
-            padding: 5px;
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
         }
-
-        .drop-zone.hovered {
-            background: #B2EBF2;
-            border-style: solid;
-        }
-
-        /* Feedback Modal/Area */
-        .feedback {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 15px;
-            min-height: 30px;
-        }
-
-        .feedback.correct {
-            color: var(--success-color);
-        }
-
-        .feedback.incorrect {
-            color: var(--danger-color);
-        }
-
-        /* Summary Screen */
-        .summary-card {
-            background: #F8F9FA;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #DFE4EA;
-        }
-
-        .score-big {
-            font-size: 3rem;
-            font-family: 'Fredoka One', cursive;
-            color: var(--primary-color);
-        }
-
-        @media (max-width: 600px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-            .cover-title {
-                font-size: 2.1rem;
-            }
-            .math-input {
-                width: 100px;
-            }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
 <body>
 
-<div class="game-container">
-    <!-- Pantalla de Inicio / Presentación -->
-    <div id="start-screen" class="screen active">
-        <h1 class="cover-title">¡Desafío Matemático!</h1>
-        <p class="cover-subtitle">Igualdades y Ecuaciones - 5.º Grado de Primaria</p>
-        <div style="font-size: 4rem; margin: 20px 0;">⚖️✏️📦</div>
-        <p style="margin-bottom: 25px; color: #555; font-size: 1.1rem; line-height: 1.5;">
-            ¡Hola, superestudiante! Pon a prueba tus habilidades resolviendo igualdades, ecuaciones y problemas matemáticos. Demuestra lo que sabes en los 3 niveles de juego.
-        </p>
-        <button class="btn btn-primary" onclick="startGame()">¡Comenzar Juego!</button>
-    </div>
-
-    <!-- Pantalla del Juego -->
-    <div id="game-screen" class="screen">
-        <div class="hud">
-            <div class="hud-item">Nivel: <span id="level-display" class="hud-value">Fácil</span></div>
-            <div class="hud-item">Pregunta: <span id="question-count" class="hud-value">1/20</span></div>
-            <div class="hud-item">Puntaje: <span id="score-display" class="hud-value">0</span></div>
-        </div>
-
-        <div class="progress-bar-container">
-            <div id="progress-bar" class="progress-bar"></div>
-        </div>
-
-        <div id="question-title" class="question-title">Cargando pregunta...</div>
-        
-        <div id="question-box" class="question-box"></div>
-
-        <!-- Área dinámica de respuestas -->
-        <div id="interactive-area"></div>
-
-        <div id="feedback" class="feedback"></div>
-
-        <button id="next-btn" class="btn btn-primary" style="display: none; margin-top: 15px;" onclick="nextQuestion()">Siguiente ➔</button>
-    </div>
-
-    <!-- Pantalla Intermedia de Cambio de Nivel -->
-    <div id="level-up-screen" class="screen">
-        <h1 class="cover-title">¡Excelente Trabajo! 🎉</h1>
-        <p class="cover-subtitle" id="level-up-msg">Has completado el nivel.</p>
-        <div class="summary-card">
-            <p>Puntaje Acumulado:</p>
-            <div class="score-big" id="level-score-display">0</div>
-        </div>
-        <button class="btn btn-primary" onclick="startNextLevel()">Siguiente Nivel 🚀</button>
-    </div>
-
-    <!-- Pantalla Final / Resultados -->
-    <div id="end-screen" class="screen">
-        <h1 class="cover-title">¡Felicidades, Campeón/a! 🏆</h1>
-        <p class="cover-subtitle">Has completado todo el Desafío Matemático</p>
-        
-        <div class="summary-card">
-            <p>Tu Puntaje Total Final:</p>
-            <div class="score-big" id="final-score">0 / 600</div>
-            <p id="final-eval" style="margin-top: 10px; font-weight: bold; color: var(--primary-color);"></p>
-        </div>
-
-        <button class="btn btn-primary" onclick="restartGame()">Volver a Jugar 🔄</button>
-    </div>
+<div class="container">
+    <h1>Cuestionario de Matemáticas</h1>
+    <form id="quizForm"></form>
+    <button type="button" onclick="evaluar()">Enviar Respuestas</button>
+    <div id="result"></div>
 </div>
 
 <script>
-    // Banco de datos con todos los ejercicios de las fichas distribuidos en 3 niveles (20 preguntas por nivel)
-    const gameLevels = [
-        {
-            name: "Fácil",
-            badge: "Nivel 1: Conceptos e Igualdades Básicas",
-            questions: [
-                // Identificación de Igualdad vs Ecuación
-                { type: "choice", title: "Indica si la siguiente expresión es una Igualdad o una Ecuación:", box: "6 + 7 = 13", options: ["Igualdad", "Ecuación"], answer: "Igualdad" },
-                { type: "choice", title: "Indica si la siguiente expresión es una Igualdad o una Ecuación:", box: "x + 5 = 12", options: ["Igualdad", "Ecuación"], answer: "Ecuación" },
-                { type: "choice", title: "Indica si la siguiente expresión es una Igualdad o una Ecuación:", box: "4 × 8 = 32", options: ["Igualdad", "Ecuación"], answer: "Igualdad" },
-                { type: "choice", title: "Indica si la siguiente expresión es una Igualdad o una Ecuación:", box: "24 − x = 10", options: ["Igualdad", "Ecuación"], answer: "Ecuación" },
-                
-                // Saberes Previos / Completar igualdades sencillas
-                { type: "choice", title: "Resuelve la siguiente igualdad básica:", box: "7 + 5 = ?", options: ["12", "11", "13", "10"], answer: "12" },
-                { type: "choice", title: "Resuelve la siguiente igualdad básica:", box: "16 − 6 − 4 = ?", options: ["6", "10", "8", "4"], answer: "6" },
-                { type: "choice", title: "Resuelve la siguiente igualdad básica:", box: "5 + 4 = ?", options: ["9", "8", "10", "7"], answer: "9" },
-                
-                // Arrastrar término faltante
-                { type: "drag", title: "Arrastra el número correcto para completar la igualdad:", box: "8 + 5 = ___", items: ["13", "12", "15"], answer: "13" },
-                { type: "drag", title: "Arrastra el número correcto para completar la igualdad:", box: "7 × ___ = 35", items: ["5", "6", "4"], answer: "5" },
-                { type: "drag", title: "Arrastra el valor correcto:", box: "___ − 6 = 10", items: ["16", "14", "12"], answer: "16" },
-                
-                // Input directo de igualdades completas
-                { type: "input", title: "Escribe el número que falta para formar la igualdad:", box: "24 + ___ = 30", answer: "6" },
-                { type: "input", title: "Escribe el valor del número desconocido:", box: "□ + 3 = 9", answer: "6" },
-                { type: "input", title: "Encuentra el valor que equilibra la balanza:", box: "8 + 4 = ?", answer: "12" },
+const cuestionario = [
+  // Sección: Indica si es Igualdad o Ecuación
+  {
+    pregunta: "Indica si '6 + 7 = 13' es una Igualdad o una Ecuación:",
+    opciones: ["Igualdad", "Ecuación"],
+    respuestaCorrecta: "Igualdad"
+  },
+  {
+    pregunta: "Indica si 'x + 5 = 12' es una Igualdad o una Ecuación:",
+    opciones: ["Igualdad", "Ecuación"],
+    respuestaCorrecta: "Ecuación"
+  },
+  {
+    pregunta: "Indica si '4 × 8 = 32' es una Igualdad o una Ecuación:",
+    opciones: ["Igualdad", "Ecuación"],
+    respuestaCorrecta: "Igualdad"
+  },
+  {
+    pregunta: "Indica si '24 - x = 10' es una Igualdad o una Ecuación:",
+    opciones: ["Igualdad", "Ecuación"],
+    respuestaCorrecta: "Ecuación"
+  },
 
-                // Conceptos teóricos de la sesión
-                { type: "choice", title: "¿Qué representa el signo igual (=) en una expresión matemática?", box: "Signo =", options: ["Una igualdad o equilibrio", "Una resta", "Una multiplicación", "Un número mayor"], answer: "Una igualdad o equilibrio" },
-                { type: "choice", title: "En una ecuación, ¿qué representa la letra 'x' o una incógnita?", box: "Letra 'x'", options: ["Un valor desconocido", "Un número fijo de 10", "Un resultado siempre cero", "Una suma"], answer: "Un valor desconocido" },
+  // Sección: Completa para formar igualdades
+  {
+    pregunta: "Completa el espacio en blanco: 8 - 5 = ____",
+    opciones: ["3", "2", "4", "5"],
+    respuestaCorrecta: "3"
+  },
+  {
+    pregunta: "Completa el espacio en blanco: ____ - 6 = 10",
+    opciones: ["16", "4", "14", "60"],
+    respuestaCorrecta: "16"
+  },
+  {
+    pregunta: "Completa el espacio en blanco: 7 × ____ = 35",
+    opciones: ["5", "6", "4", "7"],
+    respuestaCorrecta: "5"
+  },
+  {
+    pregunta: "Completa el espacio en blanco: 24 ÷ ____ = 6",
+    opciones: ["4", "3", "6", "8"],
+    respuestaCorrecta: "4"
+  },
 
-                // Ecuaciones directas sencillas
-                { type: "choice", title: "Resuelve la ecuación básica:", box: "x + 8 = 20", options: ["x = 12", "x = 28", "x = 10", "x = 15"], answer: "x = 12" },
-                { type: "choice", title: "Resuelve la ecuación básica:", box: "x − 9 = 15", options: ["x = 24", "x = 6", "x = 20", "x = 18"], answer: "x = 24" },
-                { type: "choice", title: "Resuelve la ecuación básica:", box: "25 − x = 12", options: ["x = 13", "x = 37", "x = 10", "x = 15"], answer: "x = 13" },
-                { type: "choice", title: "Resuelve la ecuación básica:", box: "6 × x = 42", options: ["x = 7", "x = 8", "x = 6", "x = 36"], answer: "x = 7" },
-                { type: "choice", title: "Resuelve la ecuación básica:", box: "x ÷ 5 = 9", options: ["x = 45", "x = 14", "x = 40", "x = 4"], answer: "x = 45" }
-            ]
-        },
-        {
-            name: "Medio",
-            badge: "Nivel 2: Resolución de Ecuaciones y Despejes",
-            questions: [
-                // Ecuaciones de Practicamos (Ficha 2) - Formato Escribir
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "a) x + 8 = 20  ➔  x = ?", answer: "12" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "b) x − 9 = 15  ➔  x = ?", answer: "24" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "c) 25 − x = 12  ➔  x = ?", answer: "13" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "d) 6 × x = 42  ➔  x = ?", answer: "7" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "e) x ÷ 5 = 9  ➔  x = ?", answer: "45" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "f) x + 14 = 30  ➔  x = ?", answer: "16" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "g) 8 × y = 56  ➔  y = ?", answer: "7" },
-                { type: "input", title: "Resuelve la ecuación y escribe el valor de x:", box: "h) x ÷ 4 = 12  ➔  x = ?", answer: "48" },
+  // Sección: Resuelve las ecuaciones
+  {
+    pregunta: "Resuelve la ecuación: x + 8 = 20",
+    opciones: ["x = 12", "x = 28", "x = 10", "x = 14"],
+    respuestaCorrecta: "x = 12"
+  },
+  {
+    pregunta: "Resuelve la ecuación: x - 9 = 15",
+    opciones: ["x = 24", "x = 6", "x = 22", "x = 135"],
+    respuestaCorrecta: "x = 24"
+  },
+  {
+    pregunta: "Resuelve la ecuación: 25 - x = 12",
+    opciones: ["x = 13", "x = 37", "x = 12", "x = 15"],
+    respuestaCorrecta: "x = 13"
+  },
+  {
+    pregunta: "Resuelve la ecuación: 6 × x = 42",
+    opciones: ["x = 7", "x = 8", "x = 36", "x = 252"],
+    respuestaCorrecta: "x = 7"
+  },
+  {
+    pregunta: "Resuelve la ecuación: x - 5 = 9",
+    opciones: ["x = 14", "x = 4", "x = 45", "x = 15"],
+    respuestaCorrecta: "x = 14"
+  },
+  {
+    pregunta: "Resuelve la ecuación: x + 14 = 30",
+    opciones: ["x = 16", "x = 44", "x = 14", "x = 20"],
+    respuestaCorrecta: "x = 16"
+  },
+  {
+    pregunta: "Resuelve la ecuación: 8 × y = 56",
+    opciones: ["y = 7", "y = 6", "y = 8", "y = 48"],
+    respuestaCorrecta: "y = 7"
+  },
+  {
+    pregunta: "Resuelve la ecuación: h × 4 = 12",
+    opciones: ["h = 3", "h = 8", "h = 16", "h = 48"],
+    respuestaCorrecta: "h = 3"
+  },
 
-                // Arrastrar despejes / valores
-                { type: "drag", title: "Arrastra la solución correcta para despejar 'x':", box: "x + 5 = 14  ➔  x = 14 − 5", items: ["x = 9", "x = 19", "x = 8"], answer: "x = 9" },
-                { type: "drag", title: "Arrastra el valor adecuado:", box: "8 × ___ = 56", items: ["7", "8", "6"], answer: "7" },
-                { type: "drag", title: "Arrastra la operación inversa correcta para despejar 'x + 14 = 30':", box: "x = 30 ___ 14", items: ["−", "+", "×"], answer: "−" },
+  // Sección: Resuelve los problemas
+  {
+    pregunta: "Lucía tenía cierta cantidad de colores. Su mamá le regaló 8 colores y ahora tiene 21. ¿Cuántos colores tenía inicialmente?",
+    opciones: ["13 colores", "29 colores", "15 colores", "12 colores"],
+    respuestaCorrecta: "13 colores"
+  },
+  {
+    pregunta: "En una caja había cierta cantidad de naranjas. Se utilizaron 12 y quedaron 18. ¿Cuántas naranjas había al principio?",
+    opciones: ["30 naranjas", "6 naranjas", "24 naranjas", "36 naranjas"],
+    respuestaCorrecta: "30 naranjas"
+  },
+  {
+    pregunta: "Cuatro bolsas contienen la misma cantidad de panes. En total hay 28 panes. ¿Cuántos panes contiene cada bolsa?",
+    opciones: ["7 panes", "6 panes", "8 panes", "112 panes"],
+    respuestaCorrecta: "7 panes"
+  },
+  {
+    pregunta: "Lucía tenía cierta cantidad de figuritas. Su amiga le regaló 12 y ahora tiene 30. ¿Cuántas figuritas tenía al principio?",
+    opciones: ["18 figuritas", "42 figuritas", "22 figuritas", "15 figuritas"],
+    respuestaCorrecta: "18 figuritas"
+  }
+];
 
-                // Opciones Múltiples de situaciones de clase (Sesión de Aprendizaje)
-                { type: "choice", title: "Situación de la balanza: En un platillo hay 1 bolsa cerrada con 'x' tapas y 4 tapas sueltas. En el otro hay 12 tapas. ¿Qué ecuación representa el equilibrio?", box: "Balanza en Equilibrio", options: ["x + 4 = 12", "x − 4 = 12", "4x = 12", "x + 12 = 4"], answer: "x + 4 = 12" },
-                { type: "choice", title: "Del problema anterior (x + 4 = 12), ¿cuántas tapas contiene la bolsa cerrada?", box: "x = 12 − 4", options: ["8 tapas", "16 tapas", "6 tapas", "10 tapas"], answer: "8 tapas" },
-                { type: "choice", title: "Situación de la caja: En una caja hay cierta cantidad de lápices 'x'. Al colocar 5 lápices más, se tienen 14 en total. ¿Cuál es la ecuación?", box: "Caja de lápices", options: ["x + 5 = 14", "x − 5 = 14", "5x = 14", "x = 14 + 5"], answer: "x + 5 = 14" },
-                { type: "choice", title: "¿Cuántos lápices había inicialmente dentro de la caja? (x + 5 = 14)", box: "Resolución de la caja", options: ["9 lápices", "19 lápices", "8 lápices", "10 lápices"], answer: "9 lápices" },
+// Mezclar preguntas aleatoriamente (Algoritmo Fisher-Yates)
+function mezclarArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
-                // Comprobaciones
-                { type: "choice", title: "Para comprobar si x = 9 es correcto en 'x + 5 = 14', sustituimos la letra por su valor:", box: "Comprobación", options: ["9 + 5 = 14", "9 − 5 = 14", "9 × 5 = 14", "14 + 5 = 9"], answer: "9 + 5 = 14" },
-                { type: "choice", title: "Si retiramos 5 tapas de ambos lados de una balanza en equilibrio, ¿qué ocurre?", box: "Propiedad de la igualdad", options: ["Se mantiene la igualdad", "La balanza se desequilibra", "El lado izquierdo pesa más", "No se puede saber"], answer: "Se mantiene la igualdad" },
-                { type: "input", title: "Resuelve reemplazando la incógnita: Si 8 × y = 56, ¿cuánto vale 'y'?", box: "8 × y = 56", answer: "7" },
-                { type: "input", title: "Resuelve: Si x ÷ 4 = 12, calcula x:", box: "x = 12 × 4", answer: "48" },
-                { type: "choice", title: "¿Cuál es el valor desconocido en: b + 5 = 12?", box: "b + 5 = 12", options: ["7", "17", "6", "8"], answer: "7" }
-            ]
-        },
-        {
-            name: "Difícil",
-            badge: "Nivel 3: Resolución de Problemas de la Ficha",
-            questions: [
-                // Problema 1: Lucía y sus colores
-                { type: "choice", title: "Problema 1: Lucía tenía cierta cantidad de colores. Su mamá le regaló 8 colores y ahora tiene 21. ¿Qué ecuación representa el problema?", box: "Problema de Lucía", options: ["x + 8 = 21", "x − 8 = 21", "8x = 21", "x + 21 = 8"], answer: "x + 8 = 21" },
-                { type: "input", title: "Problema 1: Resuelve para hallar cuántos colores tenía Lucía inicialmente (x + 8 = 21):", box: "x = 21 − 8", answer: "13" },
-                { type: "drag", title: "Arrastra la respuesta correcta al problema 1:", box: "Lucía tenía inicialmente:", items: ["13 colores", "29 colores", "15 colores"], answer: "13 colores" },
+const preguntasDesordenadas = mezclarArray([...cuestionario]);
 
-                // Problema 2: Las naranjas en la caja
-                { type: "choice", title: "Problema 2: En una caja había cierta cantidad de naranjas (x). Se utilizaron 12 y quedaron 18. ¿Cuál es la ecuación del problema?", box: "Problema de Naranjas", options: ["x − 12 = 18", "x + 12 = 18", "12x = 18", "x − 18 = 12"], answer: "x − 12 = 18" },
-                { type: "input", title: "Problema 2: Resuelve para calcular cuántas naranjas había al principio en la caja (x − 12 = 18):", box: "x = 18 + 12", answer: "30" },
-                { type: "choice", title: "Problema 2: ¿Cuántas naranjas había al principio?", box: "Resultado", options: ["30 naranjas", "6 naranjas", "24 naranjas", "36 naranjas"], answer: "30 naranjas" },
+// Renderizar preguntas en el formulario
+const formContainer = document.getElementById('quizForm');
 
-                // Problema 3: Las bolsas de panes
-                { type: "choice", title: "Problema 3: Cuatro bolsas contienen la misma cantidad de panes (x). En total hay 28 panes. ¿Qué ecuación representa esta situación?", box: "Bolsas de panes", options: ["4 × x = 28", "x + 4 = 28", "x − 4 = 28", "x ÷ 4 = 28"], answer: "4 × x = 28" },
-                { type: "input", title: "Problema 3: Resuelve para saber cuántos panes contiene cada bolsa (4 × x = 28):", box: "x = 28 ÷ 4", answer: "7" },
-                { type: "drag", title: "Arrastra la respuesta final del problema 3:", box: "Cada bolsa contiene:", items: ["7 panes", "8 panes", "6 panes"], answer: "7 panes" },
+preguntasDesordenadas.forEach((q, index) => {
+  const card = document.createElement('div');
+  card.className = 'card';
 
-                // Problema 4: Lucía y las figuritas
-                { type: "choice", title: "Problema 4: Lucía tenía cierta cantidad de figuritas (x). Su amiga le regaló 12 y ahora tiene 30. ¿Qué ecuación corresponde?", box: "Figuritas de Lucía", options: ["x + 12 = 30", "x − 12 = 30", "12x = 30", "x = 30 + 12"], answer: "x + 12 = 30" },
-                { type: "input", title: "Problema 4: Resuelve para saber cuántas figuritas tenía al principio (x + 12 = 30):", box: "x = 30 − 12", answer: "18" },
-                { type: "choice", title: "Problema 4: ¿Cuántas figuritas tenía al principio?", box: "Resultado", options: ["18 figuritas", "42 figuritas", "20 figuritas", "15 figuritas"], answer: "18 figuritas" },
+  const title = document.createElement('div');
+  title.className = 'question-title';
+  title.textContent = `${index + 1}. ${q.pregunta}`;
+  card.appendChild(title);
 
-                // Desafíos Integrados
-                { type: "input", title: "Desafío Reto: En una balanza hay 1 vaso opaco con 'x' tapas y 5 tapas más. Al otro lado hay 14 tapas. Si retiramos 5 tapas de ambos lados, ¿cuántas quedan?", box: "x = 14 − 5", answer: "9" },
-                { type: "choice", title: "Si en la ecuación 8 × y = 56, reemplazamos 'y' por 7, ¿qué obtenemos?", box: "8 × 7 = 56", options: ["Una igualdad verdadera", "Una igualdad falsa", "Una ecuación sin resolver", "Un desequilibrio"], answer: "Una igualdad verdadera" },
-                { type: "drag", title: "Arrastra el valor de 'x' que satisface la ecuación:", box: "x ÷ 4 = 12", items: ["48", "3", "16"], answer: "48" },
-                { type: "input", title: "Desafío Final: Un número disminuido en 9 es igual a 15. ¿Cuál es el número?", box: "x − 9 = 15", answer: "24" },
-                { type: "choice", title: "¿Por qué se debe retirar o sumar la misma cantidad en ambos lados de una ecuación?", box: "Estrategia de resolución", options: ["Para mantener el equilibrio e igualdad", "Para cambiar el resultado", "Porque así se elimina la letra siempre", "No es necesario hacerlo"], answer: "Para mantener el equilibrio e igualdad" },
-                { type: "input", title: "Escribe la respuesta: Si 24 + x = 30, entonces x es:", box: "24 + x = 30", answer: "6" },
-                { type: "choice", title: "¡Pregunta de Maestría! ¿Cuál es el valor de 'x' en 25 − x = 12?", box: "25 − x = 12", options: ["13", "12", "37", "14"], answer: "13" },
-                { type: "drag", title: "¡Último esfuerzo! Arrastra la solución de: x + 14 = 30", box: "x = 30 − 14", items: ["16", "14", "44"], answer: "16" }
-            ]
-        }
-    ];
+  const list = document.createElement('ul');
+  list.className = 'options-list';
 
-    let currentLevelIndex = 0;
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let totalScore = 0;
-    let selectedDragValue = "";
+  q.opciones.forEach((opcion) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <label>
+        <input type="radio" name="p${index}" value="${opcion}">
+        ${opcion}
+      </label>
+    `;
+    list.appendChild(li);
+  });
 
-    // Elementos del DOM
-    const startScreen = document.getElementById('start-screen');
-    const gameScreen = document.getElementById('game-screen');
-    const levelUpScreen = document.getElementById('level-up-screen');
-    const endScreen = document.getElementById('end-screen');
+  card.appendChild(list);
+  formContainer.appendChild(card);
+});
 
-    const levelDisplay = document.getElementById('level-display');
-    const questionCount = document.getElementById('question-count');
-    const scoreDisplay = document.getElementById('score-display');
-    const progressBar = document.getElementById('progress-bar');
-
-    const questionTitle = document.getElementById('question-title');
-    const questionBox = document.getElementById('question-box');
-    const interactiveArea = document.getElementById('interactive-area');
-    const feedback = document.getElementById('feedback');
-    const nextBtn = document.getElementById('next-btn');
-
-    function startGame() {
-        currentLevelIndex = 0;
-        currentQuestionIndex = 0;
-        totalScore = 0;
-        score = 0;
-        showScreen(gameScreen);
-        loadQuestion();
+// Función para evaluar el cuestionario
+function evaluar() {
+  let puntaje = 0;
+  
+  preguntasDesordenadas.forEach((q, index) => {
+    const seleccion = document.querySelector(`input[name="p${index}"]:checked`);
+    if (seleccion && seleccion.value === q.respuestaCorrecta) {
+      puntaje++;
     }
+  });
 
-    function showScreen(screen) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        screen.classList.add('active');
-    }
-
-    function loadQuestion() {
-        feedback.innerText = "";
-        feedback.className = "feedback";
-        nextBtn.style.display = "none";
-
-        const currentLevel = gameLevels[currentLevelIndex];
-        const q = currentLevel.questions[currentQuestionIndex];
-
-        levelDisplay.innerText = currentLevel.name;
-        questionCount.innerText = `${currentQuestionIndex + 1} / ${currentLevel.questions.length}`;
-        scoreDisplay.innerText = totalScore + score;
-
-        // Actualizar barra de progreso
-        const progress = ((currentQuestionIndex) / currentLevel.questions.length) * 100;
-        progressBar.style.width = `${progress}%`;
-
-        questionTitle.innerText = q.title;
-        questionBox.innerText = q.box;
-
-        interactiveArea.innerHTML = "";
-
-        if (q.type === "choice") {
-            const grid = document.createElement('div');
-            grid.className = 'options-grid';
-            q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(opt, q.answer);
-                grid.appendChild(btn);
-            });
-            interactiveArea.appendChild(grid);
-        } else if (q.type === "input") {
-            const container = document.createElement('div');
-            container.className = 'text-input-container';
-            container.innerHTML = `
-                <input type="text" id="user-input" class="math-input" placeholder="?" autocomplete="off">
-                <br><br>
-                <button class="btn btn-secondary" onclick="checkInputAnswer('${q.answer}')">Verificar</button>
-            `;
-            interactiveArea.appendChild(container);
-            document.getElementById('user-input').focus();
-        } else if (q.type === "drag") {
-            const dragContainer = document.createElement('div');
-            dragContainer.className = 'drag-container';
-
-            const itemsDiv = document.createElement('div');
-            itemsDiv.style.display = 'flex';
-            itemsDiv.style.gap = '10px';
-
-            q.items.forEach(item => {
-                const dragItem = document.createElement('div');
-                dragItem.className = 'drag-item';
-                dragItem.innerText = item;
-                dragItem.setAttribute('draggable', true);
-                
-                // Drag & Drop standard
-                dragItem.ondragstart = (e) => {
-                    e.dataTransfer.setData("text", item);
-                };
-
-                // Touch support para móviles/tablets
-                dragItem.onclick = () => {
-                    document.querySelectorAll('.drag-item').forEach(i => i.style.border = 'none');
-                    dragItem.style.border = '3px solid #2D3436';
-                    selectedDragValue = item;
-                };
-
-                itemsDiv.appendChild(dragItem);
-            });
-
-            const dropZone = document.createElement('div');
-            dropZone.className = 'drop-zone';
-            dropZone.innerText = "Arrastra o toca aquí";
-            
-            dropZone.ondragover = (e) => {
-                e.preventDefault();
-                dropZone.classList.add('hovered');
-            };
-            dropZone.ondragleave = () => dropZone.classList.remove('hovered');
-            dropZone.ondrop = (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('hovered');
-                const val = e.dataTransfer.getData("text");
-                dropZone.innerText = val;
-                checkAnswer(val, q.answer);
-            };
-
-            dropZone.onclick = () => {
-                if (selectedDragValue) {
-                    dropZone.innerText = selectedDragValue;
-                    checkAnswer(selectedDragValue, q.answer);
-                    selectedDragValue = "";
-                }
-            };
-
-            dragContainer.appendChild(itemsDiv);
-            dragContainer.appendChild(dropZone);
-            interactiveArea.appendChild(dragContainer);
-        }
-    }
-
-    function checkInputAnswer(correctAnswer) {
-        const userVal = document.getElementById('user-input').value.trim();
-        if (!userVal) return;
-        checkAnswer(userVal, correctAnswer);
-    }
-
-    function checkAnswer(userAnswer, correctAnswer) {
-        // Bloquear interactividad
-        const buttons = interactiveArea.querySelectorAll('button, input, .drag-item');
-        buttons.forEach(b => b.disabled = true);
-
-        if (userAnswer.toString().toLowerCase() === correctAnswer.toString().toLowerCase()) {
-            feedback.innerText = "¡Correcto! Excelente trabajo. 🎉";
-            feedback.className = "feedback correct";
-            score += 10;
-            scoreDisplay.innerText = totalScore + score;
-        } else {
-            feedback.innerText = `¡Casi! La respuesta correcta era: ${correctAnswer}`;
-            feedback.className = "feedback incorrect";
-        }
-
-        nextBtn.style.display = "inline-block";
-    }
-
-    function nextQuestion() {
-        currentQuestionIndex++;
-        const currentLevel = gameLevels[currentLevelIndex];
-
-        if (currentQuestionIndex < currentLevel.questions.length) {
-            loadQuestion();
-        } else {
-            // Nivel completado
-            totalScore += score;
-            if (currentLevelIndex < gameLevels.length - 1) {
-                document.getElementById('level-up-msg').innerText = `¡Has superado el ${currentLevel.badge}!`;
-                document.getElementById('level-score-display').innerText = totalScore;
-                showScreen(levelUpScreen);
-            } else {
-                finishGame();
-            }
-        }
-    }
-
-    function startNextLevel() {
-        currentLevelIndex++;
-        currentQuestionIndex = 0;
-        score = 0;
-        showScreen(gameScreen);
-        loadQuestion();
-    }
-
-    function finishGame() {
-        document.getElementById('final-score').innerText = `${totalScore} / 600`;
-        const evalText = document.getElementById('final-eval');
-        
-        if (totalScore >= 500) {
-            evalText.innerText = "🌟 ¡Eres un Genio Matemático! Dominas perfectamente las igualdades y ecuaciones.";
-        } else if (totalScore >= 350) {
-            evalText.innerText = "👍 ¡Buen Trabajo! Tienes muy claros los conceptos de ecuaciones.";
-        } else {
-            evalText.innerText = "💪 ¡Sigue Practicando! Cada día te volverás más fuerte en matemáticas.";
-        }
-
-        showScreen(endScreen);
-    }
-
-    function restartGame() {
-        startGame();
-    }
+  const resultDiv = document.getElementById('result');
+  resultDiv.style.display = 'block';
+  resultDiv.className = puntaje === preguntasDesordenadas.length ? 'correct' : 'incorrect';
+  resultDiv.textContent = `Obtuviste ${puntaje} de ${preguntasDesordenadas.length} respuestas correctas.`;
+}
 </script>
+
 </body>
 </html>
